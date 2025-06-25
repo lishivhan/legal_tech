@@ -33,11 +33,16 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Prepare HTML for deployment
+        run: |
+          mkdir _site
+          # This command copies all .html files from the root directory into the _site directory
+          find . -maxdepth 1 -name "*.html" -exec cp {} _site/ \;
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          # Upload the _site directory which contains your HTML file(s)
+          path: '_site'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
